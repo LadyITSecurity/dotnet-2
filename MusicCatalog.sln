@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicCatalogServer", "MusicCatalogServer\MusicCatalogServer.csproj", "{BEFAFAF0-67B3-4942-864A-81C5FFD2887B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCatalogConcoleClient", "MusicCatalogConcoleClient\MusicCatalogConcoleClient.csproj", "{56A23D2A-8816-4547-A7FE-EA520C916841}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEFAFAF0-67B3-4942-864A-81C5FFD2887B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFAFAF0-67B3-4942-864A-81C5FFD2887B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFAFAF0-67B3-4942-864A-81C5FFD2887B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFAFAF0-67B3-4942-864A-81C5FFD2887B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A23D2A-8816-4547-A7FE-EA520C916841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A23D2A-8816-4547-A7FE-EA520C916841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A23D2A-8816-4547-A7FE-EA520C916841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A23D2A-8816-4547-A7FE-EA520C916841}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DC668BC-FC40-47FF-A1C0-D7352F87F381}
+	EndGlobalSection
+EndGlobal

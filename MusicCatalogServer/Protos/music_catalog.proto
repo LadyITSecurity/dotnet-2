@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package music_catalog_server.api;
+
+service MusicCatalog {
+  rpc AddGenre(Genre) returns (GenreReply);
+  rpc RemoveGenre(Id) returns (Reply);
+  rpc SearchGenre(SearchGenreRequest) returns (SearchGenreReply);
+}
+
+message Id {
+  int32 id = 1;
+}
+
+message Genre {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GenreReply {
+  bool success = 1; // maybe to delete
+  Genre genre = 2;
+}
+
+message Reply {
+  bool success = 1;
+}
+
+message SearchGenreRequest {
+  string name = 1;
+}
+
+message SearchGenreReply {
+  repeated Genre genres = 1;
+}

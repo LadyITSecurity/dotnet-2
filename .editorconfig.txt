@@ -1,0 +1,11 @@
+[*.{axaml,cs,csproj,xaml}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+tab_width = 4
+trim_trailing_whitespace = true
+
+[*.cs]
+dotnet_separate_import_directive_groups = true
+dotnet_sort_system_directives_first = true
