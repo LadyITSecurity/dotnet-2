@@ -5,7 +5,16 @@ package music_catalog_server.api;
 service MusicCatalog {
   rpc AddGenre(Genre) returns (GenreReply);
   rpc RemoveGenre(Id) returns (Reply);
-  rpc SearchGenre(SearchGenreRequest) returns (SearchGenreReply);
+  rpc SearchGenre(SearchRequest) returns (SearchGenreReply);
+
+
+  rpc AddSinger(Singer) returns (SingerReply);
+  rpc RemoveSinger(Id) returns (Reply);
+  rpc SearchSinger(SearchRequest) returns (SearchSingerReply);
+
+  rpc AddSong(Song) returns (SongReply);
+  rpc RemoveSong(Id) returns (Reply);
+  rpc SearchSong(SearchRequest) returns (SearchSongReply);
 }
 
 message Id {
@@ -17,19 +26,49 @@ message Genre {
   string name = 2;
 }
 
+message Singer {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Song {
+  int32 id = 1;
+  string name = 2;
+  repeated Singer singers = 3;
+  repeated Genre genres = 4;
+}
+
 message GenreReply {
   bool success = 1; // maybe to delete
   Genre genre = 2;
+}
+
+message SingerReply {
+  bool success = 1; // maybe to delete
+  Singer singer = 2;
+}
+
+message SongReply {
+  bool success = 1; // maybe to delete
+  Song song = 2;
 }
 
 message Reply {
   bool success = 1;
 }
 
-message SearchGenreRequest {
+message SearchRequest {
   string name = 1;
 }
 
 message SearchGenreReply {
   repeated Genre genres = 1;
+}
+
+message SearchSingerReply {
+  repeated Singer singers = 1;
+}
+
+message SearchSongReply {
+  repeated Song songs = 1;
 }

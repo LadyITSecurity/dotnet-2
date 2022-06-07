@@ -19,14 +19,13 @@ namespace MusicCatalogServer.Services
             return _catalog.AddGenre(request);
         }
 
-        public override Task<Reply> RemoveGenre(Id request, ServerCallContext context)
-        {
-            return _catalog.RemoveGenre(request);
-        }
-
-        public override Task<SearchGenreReply> SearchGenre(SearchGenreRequest request, ServerCallContext context)
+        public override Task<SearchGenreReply> SearchGenre(SearchRequest request, ServerCallContext context)
         {
             return _catalog.SearchGenre(request);
         }
+
+        public override Task<SingerReply> AddSinger(Singer request, ServerCallContext context)
+            => _catalog.AddSinger(request);
+
     }
 }

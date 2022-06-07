@@ -1,5 +1,6 @@
 using Grpc.Core;
 using MusicCatalogServer.Api;
+
 using System.Collections.Concurrent;
 
 namespace MusicCatalogServer.Services
@@ -7,6 +8,8 @@ namespace MusicCatalogServer.Services
     public class MusicCatalog
     {
         private readonly ConcurrentDictionary<int, Genre> _genres = new();
+        private readonly ConcurrentDictionary<int, Singer> _singers = new();
+        private readonly ConcurrentDictionary<int, Song> _songs = new();
 
         private readonly ILogger<MusicCatalogService> _logger;
         public MusicCatalog(ILogger<MusicCatalogService> logger)
@@ -20,7 +23,7 @@ namespace MusicCatalogServer.Services
             {
                 lock (_genres)
                 {
-                    //�������� �� �������� ������
+                    //проверка на непустую строку
                     if (_genres.Values.Select(o => o.Name).Contains(request.Name))
                         return new GenreReply() { Success = false };
 
@@ -32,12 +35,26 @@ namespace MusicCatalogServer.Services
             });
         }
 
-        public Task<Reply> RemoveGenre(Id request)
+        public Task<SingerReply> AddSinger(Singer request)
         {
-            return Task.FromResult(new Reply());
+            return Task.Run(() =>
+            {
+                lock (_singers)
+                {
+                    //проверка на непустую строку
+                    if (_singers.Values.Select(o => o.Name).Contains(request.Name))
+                        return new SingerReply() { Success = false };
+
+                    var id = _singers.Keys.Count == 0 ? 1 : _genres.Keys.Max() + 1;
+                    var singer = new Singer() { Id = id, Name = request.Name };
+                    _singers.TryAdd(id, singer);
+                    return new SingerReply() { Success = true, Singer = singer };
+                }
+            });
         }
 
-        public Task<SearchGenreReply> SearchGenre(SearchGenreRequest request)
+
+        public Task<SearchGenreReply> SearchGenre(SearchRequest request)
         {
             return Task.Run(() =>
             {
@@ -45,6 +62,30 @@ namespace MusicCatalogServer.Services
                 .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
                 var reply = new SearchGenreReply();
                 reply.Genres.AddRange(genres);
+                return reply;
+            });
+        }
+
+        public Task<SearchSingerReply> SearchSinger(SearchRequest request)
+        {
+            return Task.Run(() =>
+            {
+                var singers = _singers.Values
+                .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
+                var reply = new SearchSingerReply();
+                reply.Singers.AddRange(singers);
+                return reply;
+            });
+        }
+
+        public Task<SearchSongReply> SearchSong(SearchRequest request)
+        {
+            return Task.Run(() =>
+            {
+                var songs = _songs.Values
+                .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
+                var reply = new SearchSongReply();
+                reply.Songs.AddRange(songs);
                 return reply;
             });
         }
