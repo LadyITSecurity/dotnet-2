@@ -16,7 +16,7 @@ namespace MusicCatalogServer.Services
 
         public override Task<Reply> AddSong(Song request, ServerCallContext context)
         {
-            return base.AddSong(request, context);
+                return base.AddSong(request, context);
         }
 
         public override Task<Reply> DeleteSong(DeleteSongRequest request, ServerCallContext context)
