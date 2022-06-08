@@ -4,18 +4,6 @@ syntax = "proto3";
 package music_catalog_server.api;
 
 service MusicCatalog {
-	/*
-  rpc AddGenre(GenreRequest) returns (GenreReply);
-  rpc DeleteGenre(GenreRequest) returns (GenreReply);
-  rpc ChangeGenre(GenreRequest) returns (GenreReply);
-  rpc SearchGenre(GenreRequest) returns (GenreReply);
-
-
-  rpc AddSinger(SingerRequest) returns (SingerReply);
-  rpc DeleteSinger(SingerRequest) returns (SingerReply);
-  rpc ChangeSinger(SingerRequest) returns (SingerReply);
-  rpc SearchSinger(SingerRequest) returns (SingerReply);
-  */
 
   rpc AddSong(Song) returns (Reply);
   rpc DeleteSong(DeleteSongRequest) returns (Reply);
@@ -43,43 +31,8 @@ message DeleteSongRequest {
   int32 id = 1;
 }
 
-/*
-message GenreRequest {
-  string Id = 1;
-  string name = 2;
-}
-
-message AllGenresReply {
-  repeated GenreReply genres = 1;
-}
-
-message GenreReply {
-  string Id = 1;
-  string name = 2;
-}
-
-message SingerRequest {
-  string Id = 1;
-  string name = 2;
-}
-
-message AllSingerReply {
-  repeated SingerReply singers = 1;
-}
-
-message SingerReply {
-  string Id = 2;
-  string name = 3;
-}
-
-message SongRequest {
-  string Id = 1;
-  SingerRequest singers = 2;
-  repeated GenreRequest genres = 3;
-}
-
 message AllSongReply {
-  repeated SongReply orders = 1;
+  repeated Song songs = 1;
 }
 
 message SongReply {

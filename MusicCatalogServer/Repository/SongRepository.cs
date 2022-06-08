@@ -8,19 +8,19 @@ namespace MusicCatalogServer.Repository
     {
         private readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly string _path;
-        private List<Song> _songs;
+        private List<Api.Song> _songs;
         //public IEnumerable<object> Values;
 
         public SongRepository(IConfiguration configuration)
         {
             _path = configuration.GetValue<string>("RepositoryPath");
-            _songs = new List<Song>();
+            _songs = new List<Api.Song>();
             //Values = _songs;
         }
 
         public IEnumerable<object> Values { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public async Task<int> Add(Song request)
+        public async Task<int> Add(Api.Song request)
         {
             if (request.Singers == null && request.Genres == null && request.Title == null)
             {
@@ -32,7 +32,7 @@ namespace MusicCatalogServer.Repository
             return request.Id;
         }
 
-        public async Task<List<Song>> GetAll()
+        public async Task<List<Api.Song>> GetAll()
         {
             await ReadSongsFileAsync();
             return _songs;
@@ -40,8 +40,13 @@ namespace MusicCatalogServer.Repository
 
         public async Task<bool> Remove(int id)
         {
-            _songs.Remove(_songs.Find(obj => obj.Id == id)!);
-            throw new NotImplementedException();
+            await ReadSongsFileAsync();
+            if (_songs.Remove(_songs.Find(f => f.Id == id)))
+            {
+                await WriteSongsFileAsync();
+                return false;
+            }
+            throw new InvalidOperationException();
         }
 
 
@@ -53,17 +58,6 @@ namespace MusicCatalogServer.Repository
         //    return _songs;
         //}
 
-        //public async Task<Guid> AddSongAsync(Song song)
-        //{
-        //    if (song.Singer == null || song.Genres == null)
-        //    {
-        //        throw new InvalidOperationException();
-        //    }
-        //    await ReadSongsFileAsync();
-        //    _songs.Add(song);
-        //    await WriteSongsFileAsync();
-        //    return song.Id;
-        //}
 
         //public async Task<Song> GetSongAsync(Guid id)
         //{
@@ -78,16 +72,6 @@ namespace MusicCatalogServer.Repository
         //    throw new InvalidOperationException();
         //}
 
-        //public async Task<Guid> DeleteSongAsync(Guid id)
-        //{
-        //    await ReadSongsFileAsync();
-        //    if (_songs.Remove(_songs.Find(f => f.Id == id)))
-        //    {
-        //        await WriteSongsFileAsync();
-        //        return id;
-        //    }
-        //    throw new InvalidOperationException();
-        //}
 
         //public async Task<Guid> ChangeSongAsync(Guid id, Song newSong)
         //{
@@ -126,12 +110,12 @@ namespace MusicCatalogServer.Repository
             {
                 if (!File.Exists(_path))
                 {
-                    _songs = new List<Song>();
+                    _songs = new List<Api.Song>();
                     return;
                 }
-                XmlSerializer formatter = new XmlSerializer(typeof(List<Song>));
+                XmlSerializer formatter = new XmlSerializer(typeof(List<Api.Song>));
                 await using FileStream fileStream = new FileStream(_path, FileMode.OpenOrCreate);
-                _songs = (List<Song>)formatter.Deserialize(fileStream);
+                _songs = (List<Api.Song>)formatter.Deserialize(fileStream);
             }
             finally
             {
@@ -144,7 +128,7 @@ namespace MusicCatalogServer.Repository
             await SemaphoreSlim.WaitAsync();
             try
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(List<Song>));
+                XmlSerializer formatter = new XmlSerializer(typeof(List<Api.Song>));
                 await using FileStream fileStream = new FileStream(_path, FileMode.Create);
                 formatter.Serialize(fileStream, _songs);
             }

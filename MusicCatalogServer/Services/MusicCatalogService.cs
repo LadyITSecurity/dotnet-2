@@ -14,9 +14,9 @@ namespace MusicCatalogServer.Services
         //    _catalog = catalog;
         //}
 
-        public override Task<Reply> AddSong(Song request, ServerCallContext context)
+        public override Task<Reply> AddSong(Api.Song request, ServerCallContext context)
         {
-            return base.AddSong(request, context);
+                return base.AddSong(request, context);
         }
 
         public override Task<Reply> DeleteSong(DeleteSongRequest request, ServerCallContext context)
@@ -24,7 +24,7 @@ namespace MusicCatalogServer.Services
             return base.DeleteSong(request, context);
         }
 
-        public override Task<SongList> SearchSong(Song request, ServerCallContext context)
+        public override Task<SongList> SearchSong(Api.Song request, ServerCallContext context)
         {
             return base.SearchSong(request, context);
         }

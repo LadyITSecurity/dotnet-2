@@ -36,13 +36,9 @@ namespace MusicCatalogConcoleServer
 
             Console.WriteLine(client.ToString());
 
-
-
-
             var searchSong = new Song();
             var reply = await client.SearchSongAsync(searchSong);
             Console.WriteLine(reply);
-
 
 
             //await client.Add(new GenreRequest() { Name = "Pop" });

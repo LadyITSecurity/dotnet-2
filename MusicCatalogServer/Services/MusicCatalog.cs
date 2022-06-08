@@ -18,7 +18,7 @@ namespace MusicCatalogServer.Services
             _logger = logger;
         }
 
-        public Task<Reply> AddSong(Song request)
+        public async Task<Reply> AddSongAsync(Api.Song request)
         {
             lock (_songRepository)
             {
@@ -27,8 +27,8 @@ namespace MusicCatalogServer.Services
                 //if (repository != null)
                 //{
                 if (repository.Select(o => o.Title == request.Title)
-                    == repository.Select(o => o.Singers == request.Singers))
-                    return Task.FromResult(new Reply() { Success = false, ErrorMessage = "The song is already there!" });
+                == repository.Select(o => o.Singers == request.Singers))
+                    return new Reply() { Success = false, ErrorMessage = "The song is already there!" };
                 id = 1;
                 //}
                 //else
@@ -36,7 +36,7 @@ namespace MusicCatalogServer.Services
                 var song = request;
                 song.Id = id;
                 _songRepository.Add(song);
-                return Task.FromResult(new Reply() { Success = true });
+                return new Reply() { Success = true };
             }
         }
 
@@ -46,7 +46,7 @@ namespace MusicCatalogServer.Services
             return new Reply { Success = result, ErrorMessage = result ? String.Empty : "Id not found" };
         }
 
-        public Task<SongList> SearchSong(Song request)
+        public Task<SongList> SearchSong(Api.Song request)
         {
             throw new InvalidOperationException();
             return Task.Run(() =>
@@ -61,9 +61,9 @@ namespace MusicCatalogServer.Services
                 throw new InvalidCastException();
 
                 var songs = _songRepository.GetAll().Result;
-                songs = (List<Song>)songs.Where(g => g.Title == request.Title);
-                songs = (List<Song>)songs.Where(g => g.Singers == request.Singers);
-                songs = (List<Song>)songs.Where(g => g.Genres == request.Genres);
+                songs = (List<Api.Song>)songs.Where(g => g.Title == request.Title);
+                songs = (List<Api.Song>)songs.Where(g => g.Singers == request.Singers);
+                songs = (List<Api.Song>)songs.Where(g => g.Genres == request.Genres);
                 //songs = (List<Song>)songs.Where(g => request.Singers.Contains(g.Singers)));
                 //songs = songs.Contains(x => x.Singers.Except(request.Singers).toList());
                 //if (request.Singers != null)
