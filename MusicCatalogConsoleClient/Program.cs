@@ -2,7 +2,6 @@
 
 using Grpc.Net.Client;
 
-using MusicCatalogClient;
 
 using MusicCatalogServer.Api;
 
@@ -19,7 +18,7 @@ namespace MusicCatalogConcoleServer
             //.StartWithClassicDesktopLifetime(args);
 
 
-            using var channel = GrpcChannel.ForAddress("http://localhost:5001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new MusicCatalog.MusicCatalogClient(channel);
             var song = new Song() { Title = "Forgiven" };
             song.Singers.Add("Skillet");
@@ -52,7 +51,7 @@ namespace MusicCatalogConcoleServer
             //Console.WriteLine(reply);
             Console.ReadKey();
 
-           // await client.DeleteGenreAsync(new Id() { "Alternate" });
+            // await client.DeleteGenreAsync(new Id() { "Alternate" });
         }
 
         // Avalonia configuration, don't remove; also used by visual designer.

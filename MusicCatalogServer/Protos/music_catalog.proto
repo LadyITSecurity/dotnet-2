@@ -1,74 +1,90 @@
 syntax = "proto3";
 
+
 package music_catalog_server.api;
 
 service MusicCatalog {
-  rpc AddGenre(Genre) returns (GenreReply);
-  rpc RemoveGenre(Id) returns (Reply);
-  rpc SearchGenre(SearchRequest) returns (SearchGenreReply);
+	/*
+  rpc AddGenre(GenreRequest) returns (GenreReply);
+  rpc DeleteGenre(GenreRequest) returns (GenreReply);
+  rpc ChangeGenre(GenreRequest) returns (GenreReply);
+  rpc SearchGenre(GenreRequest) returns (GenreReply);
 
 
-  rpc AddSinger(Singer) returns (SingerReply);
-  rpc RemoveSinger(Id) returns (Reply);
-  rpc SearchSinger(SearchRequest) returns (SearchSingerReply);
+  rpc AddSinger(SingerRequest) returns (SingerReply);
+  rpc DeleteSinger(SingerRequest) returns (SingerReply);
+  rpc ChangeSinger(SingerRequest) returns (SingerReply);
+  rpc SearchSinger(SingerRequest) returns (SingerReply);
+  */
 
-  rpc AddSong(Song) returns (SongReply);
-  rpc RemoveSong(Id) returns (Reply);
-  rpc SearchSong(SearchRequest) returns (SearchSongReply);
-}
-
-message Id {
-  int32 id = 1;
-}
-
-message Genre {
-  int32 id = 1;
-  string name = 2;
-}
-
-message Singer {
-  int32 id = 1;
-  string name = 2;
+  rpc AddSong(Song) returns (Reply);
+  rpc DeleteSong(DeleteSongRequest) returns (Reply);
+  rpc SearchSong(Song) returns (SongList);
 }
 
 message Song {
   int32 id = 1;
-  string name = 2;
-  repeated Singer singers = 3;
-  repeated Genre genres = 4;
+  string title = 2;
+  repeated string singers = 3;
+  repeated string genres = 4;
+  int32 duration_secs = 5;
 }
 
-message GenreReply {
-  bool success = 1; // maybe to delete
-  Genre genre = 2;
-}
-
-message SingerReply {
-  bool success = 1; // maybe to delete
-  Singer singer = 2;
-}
-
-message SongReply {
-  bool success = 1; // maybe to delete
-  Song song = 2;
+message SongList {	
+  repeated Song songs = 1;
 }
 
 message Reply {
   bool success = 1;
+  string error_message = 2;
 }
 
-message SearchRequest {
-  string name = 1;
+message DeleteSongRequest {
+  int32 id = 1;
 }
 
-message SearchGenreReply {
-  repeated Genre genres = 1;
+/*
+message GenreRequest {
+  string Id = 1;
+  string name = 2;
 }
 
-message SearchSingerReply {
-  repeated Singer singers = 1;
+message AllGenresReply {
+  repeated GenreReply genres = 1;
 }
 
-message SearchSongReply {
-  repeated Song songs = 1;
+message GenreReply {
+  string Id = 1;
+  string name = 2;
 }
+
+message SingerRequest {
+  string Id = 1;
+  string name = 2;
+}
+
+message AllSingerReply {
+  repeated SingerReply singers = 1;
+}
+
+message SingerReply {
+  string Id = 2;
+  string name = 3;
+}
+
+message SongRequest {
+  string Id = 1;
+  SingerRequest singers = 2;
+  repeated GenreRequest genres = 3;
+}
+
+message AllSongReply {
+  repeated SongReply orders = 1;
+}
+
+message SongReply {
+  string Id = 1;
+  SingerReply singer = 2;
+  repeated GenreReply genres = 3;
+}
+*/
