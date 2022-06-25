@@ -20,22 +20,25 @@ namespace MusicCatalogConcoleServer
 
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new MusicCatalog.MusicCatalogClient(channel);
-            var song = new Song() { Title = "Forgiven" };
-            song.Singers.Add("Skillet");
-            song.Singers.Add("Three days grace");
-            song.Genres.Add("Rock");
 
-            await client.AddSongAsync(song);
+            client.AddSong(new Song()
+            {
+                Title = "Forgiven",
+                Singers = { "Skillet", "Three days grace" },
+                Genres = { "Rock" },
+                DurationSecs = 123
+            });
+            //await client.AddSongAsync(song);
 
-            song.Title = "Over and Over";
-            song.Singers.Add("Three Days Grace");
-            song.Genres.Add("Rock");
-            song.Genres.Add("Hardrock");
-            await client.AddSongAsync(song);
+            client.AddSong(new Song()
+            {
+                Title = "Over and Over",
+                Singers = { "Three days grace" },
+                Genres = { "Rock", "Hardrock" },
+                DurationSecs = 123
+            });
 
             Console.WriteLine(client.ToString());
-
-
 
 
             var searchSong = new Song();

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\MusicCatalogServer\Protos\music_catalog.proto" GrpcServices="Client">
+    <Protobuf Include="..\MusicCatalogServer\Protos\*.proto" GrpcServices="Client">
       <Link>Protos\music_catalog.proto</Link>
     </Protobuf>
   </ItemGroup>

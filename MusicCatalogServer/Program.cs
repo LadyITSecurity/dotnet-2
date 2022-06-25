@@ -1,10 +1,42 @@
-using MusicCatalogServer.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddGrpc();
-//builder.Services.AddSingleton<MusicCatalog>();
+using MusicCatalogServer;
 
-var app = builder.Build();
-app.MapGrpcService<MusicCatalogService>();
+namespace OrderAccountingSystem
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-app.Run();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//using MusicCatalogServer.Services;
+
+//var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddGrpc();
+////builder.Services.AddSingleton<MusicCatalog>();
+
+//var app = builder.Build();
+//app.MapGrpcService<MusicCatalogService>();
+
+//app.Run();

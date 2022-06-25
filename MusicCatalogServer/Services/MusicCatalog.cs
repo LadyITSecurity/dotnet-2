@@ -2,6 +2,7 @@ using MusicCatalogServer.Api;
 using MusicCatalogServer.Repository;
 
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace MusicCatalogServer.Services
 {
@@ -18,17 +19,21 @@ namespace MusicCatalogServer.Services
             _logger = logger;
         }
 
-        public async Task<Reply> AddSongAsync(Api.Song request)
+        public Task<Reply> AddSong(Song request)
         {
             lock (_songRepository)
             {
                 int id = 0;
                 var repository = _songRepository.GetAll().Result;
+                var reply = new Reply();
                 //if (repository != null)
                 //{
-                if (repository.Select(o => o.Title == request.Title)
-                == repository.Select(o => o.Singers == request.Singers))
-                    return new Reply() { Success = false, ErrorMessage = "The song is already there!" };
+                if (_songRepository == null)
+                    _songRepository.Add(request);
+
+                if (repository.Where(o => o.Title == request.Title)
+                == repository.Where(o => o.Singers == request.Singers))
+                    return Task.FromResult(new Reply { Success = false, ErrorMessage = "The song is already there!" });
                 id = 1;
                 //}
                 //else
@@ -36,7 +41,7 @@ namespace MusicCatalogServer.Services
                 var song = request;
                 song.Id = id;
                 _songRepository.Add(song);
-                return new Reply() { Success = true };
+                return Task.FromResult(new Reply { Success = true, ErrorMessage = "" });
             }
         }
 
@@ -48,7 +53,7 @@ namespace MusicCatalogServer.Services
 
         public Task<SongList> SearchSong(Api.Song request)
         {
-            throw new InvalidOperationException();
+            //throw new InvalidOperationException();
             return Task.Run(() =>
             {
                 var reply = new SongList();
@@ -58,12 +63,71 @@ namespace MusicCatalogServer.Services
                     reply.Songs.AddRange(_songRepository.GetAll().Result);
                     return reply;
                 }
-                throw new InvalidCastException();
 
                 var songs = _songRepository.GetAll().Result;
-                songs = (List<Api.Song>)songs.Where(g => g.Title == request.Title);
-                songs = (List<Api.Song>)songs.Where(g => g.Singers == request.Singers);
-                songs = (List<Api.Song>)songs.Where(g => g.Genres == request.Genres);
+                string[] str = request.Title.ToLower().Split(" ");
+                if (request.Singers != null)
+                {
+                    foreach (var singer in request.Singers)
+                    {
+                        var result = singer.ToLower().Split(" ");
+                        foreach (var r in result)
+                            str.Append(r);
+                    }
+
+                }
+                if (request.Genres != null)
+                {
+                    foreach (var genre in request.Genres)
+                        str.Intersect(genre.ToLower().Split(" "));
+                }
+                if (request.Singers != null)
+                {
+                    foreach (var singer in request.Singers)
+                        str.Intersect(singer.ToLower().Split(" "));
+                }
+
+                foreach (var i in str)
+                    songs = (List<Api.Song>)songs.Where(g => g
+                        .ToString()
+                        .ToLower()
+                        .Contains(i));
+
+                songs = (List<Api.Song>)_songRepository
+                    .GetAll()
+                    .Result
+                    .Where(g => g.DurationSecs == request.DurationSecs);
+
+
+                //if (request.Title != null)
+                //    foreach (var i in str)
+                //        songs = (List<Api.Song>)songs.Where(g => g.Title.ToLower().Contains(i));
+
+                //if (request.Singers != null)
+                //{
+                //    foreach (var singer in request.Singers)
+                //        str = singer.ToLower().Split(" ");
+                //}
+                //foreach (var i in str)
+                //    songs = (List<Api.Song>)songs.Where(g => g.Singers.ToString().ToLower().Contains(i));
+
+                //if (request.Genres != null)
+                //{
+                //    foreach (var singer in request.Genres)
+                //        str = singer.ToLower().Split(" ");
+                //}
+                //foreach (var i in str)
+                //    songs = (List<Api.Song>)songs.Where(g => g.Genres.ToString().ToLower().Contains(i));
+
+                //songs = (List<Api.Song>)songs.Where(g => g.DurationSecs == request.DurationSecs);
+
+
+
+
+                //songs = (List<Api.Song>)songs.Where(g => g.Title == request.Title);
+                //songs = (List<Api.Song>)songs.Where(g => g.Singers == request.Singers);
+                //songs = (List<Api.Song>)songs.Where(g => g.Genres == request.Genres);
+
                 //songs = (List<Song>)songs.Where(g => request.Singers.Contains(g.Singers)));
                 //songs = songs.Contains(x => x.Singers.Except(request.Singers).toList());
                 //if (request.Singers != null)

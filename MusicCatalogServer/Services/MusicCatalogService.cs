@@ -7,26 +7,26 @@ namespace MusicCatalogServer.Services
     public class MusicCatalogService : Api.MusicCatalog.MusicCatalogBase
     {
 
-        //private readonly MusicCatalog _catalog;
+        private readonly MusicCatalog _catalog;
 
-        //public MusicCatalogService(MusicCatalog catalog)
-        //{
-        //    _catalog = catalog;
-        //}
-
-        public override Task<Reply> AddSong(Api.Song request, ServerCallContext context)
+        public MusicCatalogService(MusicCatalog catalog)
         {
-                return base.AddSong(request, context);
+            _catalog = catalog;
+        }
+
+        public override Task<Reply> AddSong(Song request, ServerCallContext context)
+        {
+            return _catalog.AddSong(request);
         }
 
         public override Task<Reply> DeleteSong(DeleteSongRequest request, ServerCallContext context)
         {
-            return base.DeleteSong(request, context);
+            return _catalog.DeleteSong(request);
         }
 
         public override Task<SongList> SearchSong(Api.Song request, ServerCallContext context)
         {
-            return base.SearchSong(request, context);
+            return _catalog.SearchSong(request);
         }
     }
 }

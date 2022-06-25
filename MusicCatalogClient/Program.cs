@@ -19,20 +19,25 @@ namespace MusicCatalogConcoleServer
             //.StartWithClassicDesktopLifetime(args);
 
 
-            using var channel = GrpcChannel.ForAddress("http://localhost:5001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new MusicCatalog.MusicCatalogClient(channel);
-            var song = new Song() { Title = "Forgiven" };
-            song.Singers.Add("Skillet");
-            song.Singers.Add("Three days grace");
-            song.Genres.Add("Rock");
 
-            await client.AddSongAsync(song);
+            await client.AddSongAsync(new Song()
+            {
+                Title = "Forgiven",
+                Genres = { "Rock", "Hardrock" },
+                Singers = { "Skillet" },
+                DurationSecs = 123
+            });
 
-            song.Title = "Over and Over";
-            song.Singers.Add("Three Days Grace");
-            song.Genres.Add("Rock");
-            song.Genres.Add("Hardrock");
-            await client.AddSongAsync(song);
+
+            await client.AddSongAsync(new Song()
+            {
+                Title = "Over and Over",
+                Genres = { "Rock" },
+                Singers = { "Three Days Grace" },
+                DurationSecs = 123
+            });
 
             Console.WriteLine(client.ToString());
 
