@@ -18,7 +18,7 @@ namespace MusicCatalogServer.Services
             _logger = logger;
         }
 
-        public async Task<Reply> AddSongAsync(Api.Song request)
+        public async Task<Reply> AddSongAsync(Song request)
         {
             lock (_songRepository)
             {
