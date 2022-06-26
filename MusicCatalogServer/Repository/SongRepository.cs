@@ -20,7 +20,7 @@ namespace MusicCatalogServer.Repository
 
         public IEnumerable<object> Values { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public async Task<List<Api.Song>> GetAll()
+        public async Task<List<Song>> GetAll()
         {
             await ReadSongsFileAsync();
             return _songs;

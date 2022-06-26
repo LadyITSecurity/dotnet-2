@@ -42,8 +42,8 @@ namespace MusicCatalogConcoleServer
 
 
             var searchSong = new Song();
-            var reply = await client.SearchSongAsync(searchSong);
-            Console.WriteLine(reply);
+            var findSongs = await client.SearchSongAsync(searchSong);
+            Console.WriteLine(findSongs);
 
 
 

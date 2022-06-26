@@ -1,4 +1,5 @@
-//using Avalonia;
+using Avalonia;
+using Avalonia.Reactive;
 
 using Grpc.Net.Client;
 
@@ -15,9 +16,9 @@ namespace MusicCatalogConcoleServer
     {
         public static async Task Main(string[] args)
         {
-            //BuildAvaloniaApp()
-            //.StartWithClassicDesktopLifetime(args);
-
+            BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+        }
 
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new MusicCatalog.MusicCatalogClient(channel);
