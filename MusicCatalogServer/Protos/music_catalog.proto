@@ -4,7 +4,6 @@ syntax = "proto3";
 package music_catalog_server.api;
 
 service MusicCatalog {
-
   rpc AddSong(Song) returns (Reply);
   rpc DeleteSong(DeleteSongRequest) returns (Reply);
   rpc SearchSong(Song) returns (SongList);

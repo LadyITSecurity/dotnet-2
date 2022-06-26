@@ -19,19 +19,7 @@ namespace MusicCatalogServer.Services
             _logger = logger;
         }
 
-        public async Task<Reply> AddSongAsync(Song request)
-        public async Task<Reply> AddSongAsync(Song request)
-=========
-        public async Task<Reply> AddSongAsync(Api.Song request)
->>>>>>>>> Temporary merge branch 2
-
-
-
-
-
-
-
-
+        public Task<Reply> AddSong(Song request)
         {
             lock (_songRepository)
             {

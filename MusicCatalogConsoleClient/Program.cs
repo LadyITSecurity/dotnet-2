@@ -21,7 +21,7 @@ namespace MusicCatalogConcoleServer
             using var channel = GrpcChannel.ForAddress("http://localhost:5000");
             var client = new MusicCatalog.MusicCatalogClient(channel);
 
-            client.AddSong(new Song()
+            await client.AddSongAsync(new Song()
             {
                 Title = "Forgiven",
                 Singers = { "Skillet", "Three days grace" },
