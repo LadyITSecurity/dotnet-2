@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Layout;
 
-using MusicCatalogServer.Api;
 
 using ReactiveUI;
 
@@ -17,7 +16,7 @@ namespace MusicCatalogAvaloniaClient.ViewModels
     public class SongViewModel : ReactiveObject
     {
         public MainViewModel _MainViewModel { get; set; }
-        public Song SongProto { get; set; } = new();
+        public MusicCatalogServer.Api.Song SongProto { get; set; } = new();
         public int ID { get; set; }
         public string Title { get; set; }
         public List<string> Singers { get; set; } = new();
@@ -26,7 +25,7 @@ namespace MusicCatalogAvaloniaClient.ViewModels
         public ReactiveCommand<Unit, Unit> OkCommand { get; }
         public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
-        public SongViewModel(MainViewModel mainViewModel, Song songProto)
+        public SongViewModel(MainViewModel mainViewModel, MusicCatalogServer.Api.Song songProto)
         {
             _MainViewModel = mainViewModel;
             SongProto = songProto;
@@ -37,6 +36,16 @@ namespace MusicCatalogAvaloniaClient.ViewModels
                 Singers.Add(singer);
             foreach (var genre in songProto.Genres)
                 Genres.Add(genre);
+        }
+
+        public SongViewModel(MusicCatalogServer.Api.Song songProto)
+        {
+            SongProto = songProto;
+            ID = songProto.Id;
+            Title = songProto.Title;
+            DurationSecs = songProto.DurationSecs;
+            Singers = songProto.Singers.ToList();
+            Genres = songProto.Genres.ToList();
         }
 
         public SongViewModel(MainViewModel mainViewModel)

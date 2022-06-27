@@ -5,17 +5,19 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Channels;
 
+using DynamicData;
+
 using Grpc.Net.Client;
 
 using MusicCatalogServer.Api;
 
 using ReactiveUI;
-
+    
 namespace MusicCatalogAvaloniaClient.ViewModels
 {
     public class MainViewModel : ReactiveObject
     {
-        public ObservableCollection<SongViewModel> Songs = new ObservableCollection<SongViewModel>();
+        public ObservableCollection<SongViewModel> Songs { get; set; } = new ObservableCollection<SongViewModel>();
 
         private MusicCatalog.MusicCatalogClient _client;
         public ReactiveCommand<Unit, Unit> AddCommand { get; }
@@ -39,7 +41,11 @@ namespace MusicCatalogAvaloniaClient.ViewModels
 
         private void UpdateDatabase()
         {
-           
+            Songs.Clear();
+            var allSongs = _client.GetAll(new NullRequest());
+            if (allSongs != null)
+                foreach (var song in allSongs.Songs)
+                    Songs.Add(new SongViewModel(song));
         }
 
         private void SearchTask()

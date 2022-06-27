@@ -35,8 +35,7 @@
                         Name="RemoveButton"
                         Padding="16,4,16,4" />
             </StackPanel>
-            <ListBox Items="{Binding Songs}"
-                     SelectionChanged="OnSelectionChanged" >
+            <ListBox Items="{Binding Songs}" >
                 </ListBox>
         </DockPanel>
     </DockPanel>

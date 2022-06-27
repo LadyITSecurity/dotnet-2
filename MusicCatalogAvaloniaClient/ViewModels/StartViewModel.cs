@@ -61,7 +61,7 @@ namespace MusicCatalogAvaloniaClient.ViewModels
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message);
+                Console.WriteLine("The name string can`t be empty!");
             }
         }
         private void Cancel()
