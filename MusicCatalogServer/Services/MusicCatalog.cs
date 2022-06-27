@@ -61,156 +61,51 @@ namespace MusicCatalogServer.Services
                 }
                 var songs = _songRepository.GetAll().Result;
 
+                var str = request.Title.ToString().ToLower().Split(' ');
+                List<string> substring = new();
+                foreach (var i in str)
+                    substring.Add(i);
 
-                //songs = (List<Song>)songs.Where(g => request.Singers.Contains(g.Singers)));
-                //songs = songs.Contains(x => x.Singers.Except(request.Singers).toList());
-                //if (request.Singers != null)
-                //{
-                //    //songs = songs.Find(x => request.Singers.Contains(y => x. ))
-                //    //foreach (var singer in request.Singers)
-                //    //    songs = songs
-                //    //    .Select(o => o.Singers.Contains(singer));
-                //}
+                if (request.Singers != null)
+                {
+                    foreach (var singer in request.Singers)
+                    {
+                        var s = singer.ToString().ToLower().Split(" ");
+                        foreach (var r in s)
+                            substring.Add(r);
+                    }
+                }
 
-                //if (request.Genres != null)
-                //    foreach (var genre in request.Genres)
-                //        songs = songs
-                //            .Where(g => g.Genres.Contains<List<string>>(request.Genres));
+                if (request.Genres != null)
+                {
+                    foreach (var genres in request.Genres)
+                    {
+                        var s = genres.ToString().ToLower().Split(" ");
+                        foreach (var r in s)
+                            substring.Add(r);
+                    }
+                }
 
+                List<Song> result = new();
 
-
-                var str = request.Title.ToString().ToLower();
-
-                var singers = request.Title.ToLower().Split(' ');
-                var found = songs.Where(o => o.Title == request.Title && o.Singers == request.Singers);
-                //songs = songs.Find(g => g.Title == request.Title);
-                    //|| g.Singers.ToString().Contains(request.Singers.ToString())
-                    //|| g.Genres.ToString().Contains(request.Genres.ToString()));
-
-
-                //songs = (List<Song>)songs.Where(g => g.Title.ToString().ToLower().Split(' ').Intersect(singers) ||
-                //    g.Singers == request.Singers ||
-                //    g.Genres == request.Genres);
-
-
-
-                //if (request.Singers != null)
-                //{
-                //    foreach (var singer in request.Singers)
-                //    {
-                //        var s = singer.ToLower().Split(" ");
-                //        foreach (var r in s)
-                //            str.Append(r);
-                //    }
-                //}
-                //if (request.Genres != null)
-                //{
-                //    foreach (var genre in request.Genres)
-                //        str.Intersect(genre.ToLower().Split(" "));
-                //}
-                ////if (request.Singers != null)
-                ////{
-                ////    foreach (var singer in request.Singers)
-                ////        str.Intersect(singer.ToString().ToLower().Split(" "));
-                ////}
-
-                //foreach (var i in str)
-                //    songs = (List<Api.Song>)songs.Where(g => g
-                //        .ToString()
-                //        .ToLower()
-                //        .Contains(i.ToString()));
-
-                //songs = (List<Api.Song>)_songRepository
-                //    .GetAll()
-                //    .Result
-                //    .Where(g => g.DurationSecs == request.DurationSecs);
-
-
-
-                //if (request.Title != null)
-                //    foreach (var i in str)
-                //        songs = (List<Api.Song>)songs.Where(g => g.Title.ToLower().Contains(i));
-
-                //if (request.Singers != null)
-                //{
-                //    foreach (var singer in request.Singers)
-                //        str = singer.ToLower().Split(" ");
-                //}
-                //foreach (var i in str)
-                //    songs = (List<Api.Song>)songs.Where(g => g.Singers.ToString().ToLower().Contains(i));
-
-                //if (request.Genres != null)
-                //{
-                //    foreach (var singer in request.Genres)
-                //        str = singer.ToLower().Split(" ");
-                //}
-                //foreach (var i in str)
-                //    songs = (List<Api.Song>)songs.Where(g => g.Genres.ToString().ToLower().Contains(i));
-
-                //songs = (List<Api.Song>)songs.Where(g => g.DurationSecs == request.DurationSecs);
-
-
-
-
-                //songs = (List<Api.Song>)songs.Where(g => g.Title == request.Title);
-                //songs = (List<Api.Song>)songs.Where(g => g.Singers == request.Singers);
-                //songs = (List<Api.Song>)songs.Where(g => g.Genres == request.Genres);
-
-                //songs = (List<Song>)songs.Where(g => request.Singers.Contains(g.Singers)));
-                //songs = songs.Contains(x => x.Singers.Except(request.Singers).toList());
-                //if (request.Singers != null)
-                //{
-                //    //songs = songs.Find(x => request.Singers.Contains(y => x. ))
-                //    //foreach (var singer in request.Singers)
-                //    //    songs = songs
-                //    //    .Select(o => o.Singers.Contains(singer));
-                //}
-
-                //if (request.Genres != null)
-                //    foreach (var genre in request.Genres)
-                //        songs = songs
-                //            .Where(g => g.Genres.Contains(genre, StringComparison.InvariantCultureIgnoreCase));
-
-                reply.Songs.AddRange(found);
+                foreach (var i in substring)
+                    foreach (var song in songs)
+                    {
+                        if (request.Title != null)
+                            if (song.Title.ToLower().Contains(i.ToString()) && result.Find(g => g.Id == song.Id) == null)
+                                result.Add(song);
+                        if (request.Singers != null)
+                            foreach (var singer in song.Singers)
+                                if (singer.ToLower().Contains(i.ToString()) && result.Find(g => g.Id == song.Id) == null)
+                                    result.Add(song);
+                        if (request.Genres != null)
+                            foreach (var genre in song.Genres)
+                                if (genre.ToLower().Contains(i.ToString()) && result.Find(g => g.Id == song.Id) == null)
+                                    result.Add(song);
+                    }
+                reply.Songs.AddRange(result);
                 return reply;
             });
         }
-
-        //    public Task<SearchGenreReply> SearchGenre(SearchRequest request)
-        //    {
-        //        return Task.Run(() =>
-        //        {
-        //            var genres = _genres.Values
-        //            .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
-        //            var reply = new SearchGenreReply();
-        //            reply.Genres.AddRange(genres);
-        //            return reply;
-        //        });
-        //    }
-
-        //    public Task<SearchSingerReply> SearchSinger(SearchRequest request)
-        //    {
-        //        return Task.Run(() =>
-        //        {
-        //            var singers = _singers.Values
-        //            .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
-        //            var reply = new SearchSingerReply();
-        //            reply.Singers.AddRange(singers);
-        //            return reply;
-        //        });
-        //    }
-
-        //    public Task<SearchSongReply> SearchSong(SearchRequest request)
-        //    {
-        //        return Task.Run(() =>
-        //        {
-        //            var songs = _songs.Values
-        //            .Where(g => g.Name.Contains(request.Name, StringComparison.InvariantCultureIgnoreCase));
-        //            var reply = new SearchSongReply();
-        //            reply.Songs.AddRange(songs);
-        //            return reply;
-        //        });
-        //    }
     }
 }
-

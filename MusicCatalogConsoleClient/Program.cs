@@ -8,7 +8,7 @@ using MusicCatalogServer.Api;
 using System;
 using System.Threading.Tasks;
 
-namespace MusicCatalogConcoleServer
+namespace MusicCatalogConcoleClient
 {
     internal class Program
     {
