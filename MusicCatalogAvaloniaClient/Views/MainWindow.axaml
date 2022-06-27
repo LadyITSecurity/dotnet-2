@@ -14,7 +14,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Выход" Click="OnExitClick" />
+                <MenuItem Header="Выход" />
             </MenuItem>
         </Menu>
         <DockPanel Margin="10">
@@ -22,10 +22,10 @@
                         HorizontalAlignment="Right"
                         Margin="0,10,0,0"
                         Orientation="Horizontal">
-                <Button Click="OnAddClick"
+                <Button 
                         Content="Добавить"
                         Padding="16,4,16,4" />
-                <Button Click="OnRemoveClick"
+                <Button 
                         Content="Удалить"
                         IsEnabled="False"
                         Margin="10,0,0,0"
@@ -33,7 +33,7 @@
                         Padding="16,4,16,4" />
             </StackPanel>
             <ListBox Name="IntegerListBox"
-                     SelectionChanged="OnSelectionChanged" />
+                      />
         </DockPanel>
     </DockPanel>
 </Window>

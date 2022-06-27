@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicCatalogServer", "Music
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicCatalogConsoleClient", "MusicCatalogConsoleClient\MusicCatalogConsoleClient.csproj", "{C8FD8979-B3EE-4DD2-8B95-58DBD93F3DF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCatalogAvaloniaClient", "MusicCatalogAvaloniaClient\MusicCatalogAvaloniaClient.csproj", "{D699AF04-50F4-4E22-BBDD-6E938F2BE1EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicCatalogAvaloniaClient", "MusicCatalogAvaloniaClient\MusicCatalogAvaloniaClient.csproj", "{9D7C3F0C-6654-4534-93F6-DAF826A1467C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C8FD8979-B3EE-4DD2-8B95-58DBD93F3DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8FD8979-B3EE-4DD2-8B95-58DBD93F3DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8FD8979-B3EE-4DD2-8B95-58DBD93F3DF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D699AF04-50F4-4E22-BBDD-6E938F2BE1EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D699AF04-50F4-4E22-BBDD-6E938F2BE1EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D699AF04-50F4-4E22-BBDD-6E938F2BE1EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D699AF04-50F4-4E22-BBDD-6E938F2BE1EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7C3F0C-6654-4534-93F6-DAF826A1467C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7C3F0C-6654-4534-93F6-DAF826A1467C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7C3F0C-6654-4534-93F6-DAF826A1467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7C3F0C-6654-4534-93F6-DAF826A1467C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
