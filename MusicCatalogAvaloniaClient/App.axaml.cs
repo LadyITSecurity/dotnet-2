@@ -17,12 +17,11 @@ namespace MusicCatalogAvaloniaClient
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
+                desktop.MainWindow = new StartWindow
                 {
-                    DataContext = new MainViewModel(),
+                    DataContext = new StartViewModel(),  
                 };
             }
-
             base.OnFrameworkInitializationCompleted();
         }
     }

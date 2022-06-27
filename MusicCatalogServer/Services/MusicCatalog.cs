@@ -19,6 +19,15 @@ namespace MusicCatalogServer.Services
             _logger = logger;
         }
 
+        public async Task<SongList> GetAll()
+        {
+            var result = await _songRepository.GetAll();
+            var songList = new SongList();
+            foreach (var i in result)
+                songList.Songs.Add(i);
+            return songList;
+        }
+
         public Task<Reply> AddSong(Song request)
         {
             lock (_songRepository)

@@ -5,6 +5,9 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
+using Avalonia.Controls;
+using Avalonia.Layout;
+
 using MusicCatalogServer.Api;
 
 using ReactiveUI;
@@ -35,19 +38,32 @@ namespace MusicCatalogAvaloniaClient.ViewModels
             foreach (var genre in songProto.Genres)
                 Genres.Add(genre);
         }
+
         public SongViewModel(MainViewModel mainViewModel)
         {
             OkCommand = ReactiveCommand.Create(Add);
             CancelCommand = ReactiveCommand.Create(Cancel);
         }
 
-
-
         public void Add()
         {
             if (Title == string.Empty)
             {
-                //
+                var msgBox = new Window
+                {
+                    Content = new Label
+                    {
+                        Content = "Не удалось подключиться к серверу!",
+                        FontSize = 16,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    },
+                    Width = 350,
+                    Height = 50,
+                    CanResize = false,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Title = "MessageBox"
+                };
             }
 
         }

@@ -28,5 +28,10 @@ namespace MusicCatalogServer.Services
         {
             return _catalog.SearchSong(request);
         }
+
+        //public override Task<SongList> GetAll(ServerCallContext context)
+        //{
+        //    return _catalog.GetAll();
+        //}
     }
 }

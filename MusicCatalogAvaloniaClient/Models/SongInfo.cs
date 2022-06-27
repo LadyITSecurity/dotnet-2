@@ -14,7 +14,6 @@ namespace MusicCatalogAvaloniaClient.Models
         public List<string> Genres { get; set; } = new();
         public int DurationSecs { get; set; }
 
-
         public string FormatSingers()
         {
             string result = Singers[0];

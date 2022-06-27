@@ -25,6 +25,7 @@ namespace MusicCatalogServer.Repository
             await ReadSongsFileAsync();
             return _songs;
         }
+
         public async Task<int> Add(Api.Song request)
         {
             if (request.Singers == null && request.Genres == null && request.Title == null)
@@ -62,49 +63,7 @@ namespace MusicCatalogServer.Repository
         //}
 
 
-        //public async Task<Song> GetSongAsync(Guid id)
-        //{
-        //    await ReadSongsFileAsync();
-        //    foreach (Song song in _songs)
-        //    {
-        //        if (song.Id.Equals(id))
-        //        {
-        //            return song;
-        //        }
-        //    }
-        //    throw new InvalidOperationException();
-        //}
 
-
-        //public async Task<Guid> ChangeSongAsync(Guid id, Song newSong)
-        //{
-        //    if (newSong.Singer == null || newSong.Genres == null)
-        //    {
-        //        throw new InvalidOperationException();
-        //    }
-        //    await ReadSongsFileAsync();
-        //    foreach (Song song in _songs)
-        //    {
-        //        if (song.Id == id)
-        //        {
-        //            song.Singer = newSong.Singer;
-        //            song.Genres = newSong.Genres;
-        //            await WriteSongsFileAsync();
-        //            return id;
-        //        }
-        //    }
-        //    throw new InvalidOperationException();
-        //}
-
-        //public async Task<bool> CheckSongAsync(Guid id)
-        //{
-        //    await ReadSongsFileAsync();
-        //    if (_songs.Find(f => f.Id.Equals(id)) != null)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
 
         private async Task ReadSongsFileAsync()
         {
