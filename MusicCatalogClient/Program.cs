@@ -3,14 +3,12 @@ using Avalonia.Reactive;
 
 using Grpc.Net.Client;
 
-using MusicCatalogClient;
-
 using MusicCatalogServer.Api;
 
 using System;
 using System.Threading.Tasks;
 
-namespace MusicCatalogConcoleServer
+namespace MusicCatalogClient
 {
     internal class Program
     {
