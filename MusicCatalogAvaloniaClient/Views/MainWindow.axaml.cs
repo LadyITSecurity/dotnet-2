@@ -10,10 +10,5 @@ namespace MusicCatalogAvaloniaClient.Views
         {
             InitializeComponent();
         }
-        public MainWindow(string address)
-        {
-            InitializeComponent();
-            DataContext = new MainViewModel(address);
-        }
     }
 }

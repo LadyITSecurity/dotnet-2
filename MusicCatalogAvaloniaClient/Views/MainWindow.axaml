@@ -15,7 +15,7 @@
         <Menu
             Background="MediumSlateBlue"
             DockPanel.Dock="Top">
-            <MenuItem Header="Файл">
+            <MenuItem Header="Репозиторий музыки">
                 <MenuItem Header="Выход" />
             </MenuItem>
         </Menu>
@@ -28,15 +28,24 @@
                         Padding="16,4,16,4"/>
                 <Button Content=" Поиск "
                         Padding="16,4,16,4"
-                        Margin="10,0,0,0"/>                
+                        Margin="10,0,0,0"/>
                 <Button Content="Удалить"
                         IsEnabled="False"
                         Margin="10,0,0,0"
                         Name="RemoveButton"
                         Padding="16,4,16,4" />
             </StackPanel>
+ 
             <ListBox Items="{Binding Songs}" >
-                </ListBox>
+                <ListBox.DataTemplates>
+                    <DataTemplate DataType="vm:SongViewModel">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Title}"/>
+                            <Label Content="{Binding DurationSecs}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.DataTemplates>
+            </ListBox>
         </DockPanel>
     </DockPanel>
 </Window>

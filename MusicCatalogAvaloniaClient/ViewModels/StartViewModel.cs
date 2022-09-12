@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
-using System.Text;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
-
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Layout;
 
 using MusicCatalogAvaloniaClient.Views;
 
@@ -17,17 +11,18 @@ namespace MusicCatalogAvaloniaClient.ViewModels
 {
     public class StartViewModel
     {
-        public string ConnectionAddress { get; set; } = string.Empty;
+        public string ConnectionAddress { get; set; } = "http://localhost:5000";
+        public Interaction<Unit, Unit> CloseWindow { get; } = new();
         public ReactiveCommand<Unit, Unit> OkCommand { get; }
         public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
         public StartViewModel()
         {
-            OkCommand = ReactiveCommand.CreateFromTask(Add);
+            OkCommand = ReactiveCommand.CreateFromTask(Ok);
             CancelCommand = ReactiveCommand.Create(Cancel);
         }
 
-        private async Task Add()
+        private async Task Ok()
         {
             //var msgBox = new Window
             //{
@@ -49,15 +44,12 @@ namespace MusicCatalogAvaloniaClient.ViewModels
 
             try
             {
-                MainWindow mainWindow = new(ConnectionAddress);
+                var vm = new MainViewModel(ConnectionAddress);
+                var mainWindow = new MainWindow { DataContext = vm };
                 mainWindow.Show();
-                foreach (Window window in App.Current.Resources.Values)
-                {
-                    if (window.GetType() == typeof(StartWindow))
-                    {
-                        window.Close();
-                    }
-                }
+
+                await CloseWindow.Handle(Unit.Default);
+
             }
             catch (Exception e)
             {
